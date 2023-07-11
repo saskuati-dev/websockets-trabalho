@@ -1,0 +1,26 @@
+import asyncio
+import websockets
+
+# Função para tratar as mensagens recebidas do cliente
+async def receber_mensagem(websocket):
+    mensagem = await websocket.recv()
+    print(f"Mensagem recebida: {mensagem}")
+
+# Função para enviar uma mensagem ao cliente
+async def enviar_mensagem(websocket):
+    mensagem = input("Digite uma mensagem para enviar ao cliente: ")
+    await websocket.send(mensagem)
+
+# Função principal do servidor WebSocket
+async def servidor_websocket(websocket,):
+    # Loop para receber e enviar mensagens
+    while True:
+        await receber_mensagem(websocket)
+        await enviar_mensagem(websocket)
+
+# Configuração e execução do servidor WebSocket
+start_server = websockets.serve(servidor_websocket, 'localhost', 7894)
+
+# Execução assíncrona do servidor
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
